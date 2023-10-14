@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 
 function App() {
   // state
@@ -8,6 +8,11 @@ function App() {
   function increment() {
     setCount((count) => count + 1)
   }
+  useEffect(() => {
+    
+    const timer = setTimeout(increment, 500);    
+    return () => clearTimeout(timer);
+  }, []);
 
   // view
   return (
