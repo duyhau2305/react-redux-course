@@ -1,8 +1,63 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- redux
 
-Currently, two official plugins are available:
+```
+const todoState = {
+  todos: [],
+  isLoading: false,
+  todoItem: null
+}
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+function todoReducer() {
+  switch (action.type) {
+    case 'ADD_TODO':{
+      return {
+        ...state,
+        todos: [...state.todos, action.payload]
+      }
+    }
+  }
+}
+
+const aboutState = {
+  content: '',
+  title: '',
+}
+
+function aboutReducer() {
+  switch (action.type) {
+    case 'ADD_TODO':{
+      return {
+        ...state,
+        title: action.payload
+      }
+    }
+  }
+}
+- after using combineReducers
+
+const rootState = {
+  todos: [],
+  isLoading: false,
+  todoItem: null,
+  content: '',
+  title: '',
+} 
+function rootReducer() {
+  switch (action.type) {
+    case 'TODO/ADD_TODO':{
+      return {
+        ...state,
+        todos: [...state.todos, action.payload]
+      }
+    }
+    case 'ABOUT/ADD_TODO':{
+      return {
+        ...state,
+        title: action.payload
+      }
+    }
+  }
+}
+```

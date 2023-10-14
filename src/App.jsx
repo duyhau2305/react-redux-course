@@ -8,10 +8,12 @@ function App() {
   function increment() {
     setCount((count) => count + 1)
   }
+
   useEffect(() => {
-    
     const timer = setTimeout(increment, 500);    
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   // view
