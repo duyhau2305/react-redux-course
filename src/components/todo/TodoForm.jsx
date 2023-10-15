@@ -8,7 +8,8 @@ import {
   Stack,
   Radio,
   Button,
-  Divider
+  Divider,
+  useToast
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -23,17 +24,25 @@ function TodoForm() {
     handleSubmit,
     formState: { errors },
   } = useForm()
-
+  const toast = useToast()
+  
+  
   const onSubmit = (data) => {
+    
+    
     const todoItem = {
       id: new Date().getTime().toString(),
       ...data,
     }
     dispatch(todoActions.addTodo(todoItem))
+    dispatch(todoActions.showLoading())
+    setTimeout(() =>{  
+      dispatch(todoActions.hideLoading());
+    }, 1000)
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form  onSubmit={handleSubmit(onSubmit)}>
       <FormControl isInvalid={errors.title}>
         <FormLabel>Title</FormLabel>
         <Input type='text' {...register("title", { required: true })} />
@@ -59,7 +68,7 @@ function TodoForm() {
 
       <br />
       <div style={{ textAlign: 'right' }}>
-        <Button size="sm" colorScheme='blue' type="submit">Submit</Button>
+        <Button  isloading={todoActions.isloading} size="sm" colorScheme='blue' type="submit">Submit</Button>
       </div>
       <br />
       
