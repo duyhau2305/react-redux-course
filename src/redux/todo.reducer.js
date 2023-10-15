@@ -2,7 +2,7 @@ import * as todoActions from './todo.actions';
 
 // initial state
 const initialState = {
-  todos: []
+  todos: [],
 }
 
 export const todoReducer = (state = initialState, { type, payload }) => {
@@ -11,16 +11,6 @@ export const todoReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         todos: [...state.todos, payload]
-      }
-    case todoActions.SHOW_LOADING:
-      return {
-        ...state,
-        todos: [...state.todos,payload]
-      }
-      case todoActions.HIDE_LOADING:
-      return {
-        ...state,
-        todos: [...state.todos,payload]
       }
     default:
       return state;

@@ -12,13 +12,16 @@ import {
   useToast
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // actions
 import * as todoActions from '../../redux/todo.actions';
+import * as appActions from '../../redux/app.actions'
+
 
 function TodoForm() {
   const dispatch = useDispatch();
+  const isLoading = useSelector(state => state.app.isLoading);
   const {
     register,
     handleSubmit,
@@ -26,19 +29,25 @@ function TodoForm() {
   } = useForm()
   const toast = useToast()
   
-  
   const onSubmit = (data) => {
-    
-    
     const todoItem = {
       id: new Date().getTime().toString(),
       ...data,
     }
-    dispatch(todoActions.addTodo(todoItem))
-    dispatch(todoActions.showLoading())
+    dispatch(appActions.setLoading(true))
+
     setTimeout(() =>{  
-      dispatch(todoActions.hideLoading());
-    }, 1000)
+      dispatch(appActions.setLoading(false));
+      dispatch(todoActions.addTodo(todoItem))
+      toast({
+        title: 'Todo created.',
+        description: "We've created todo for you.",
+        status: 'success',
+        duration: 1000,
+        isClosable: true,
+        position: 'top-right',
+      })
+    }, 2000)
   }
 
   return (
@@ -68,7 +77,7 @@ function TodoForm() {
 
       <br />
       <div style={{ textAlign: 'right' }}>
-        <Button  isloading={todoActions.isloading} size="sm" colorScheme='blue' type="submit">Submit</Button>
+        <Button isLoading={isLoading}  size="sm" colorScheme='blue' type="submit">Submit</Button>
       </div>
       <br />
       
