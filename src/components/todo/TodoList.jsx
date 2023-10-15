@@ -8,6 +8,7 @@ import {
   Td,
   Tag,
   TableContainer,
+  Button
 } from '@chakra-ui/react'
 
 import { STATUS_COLOR } from '../../configs/statusColor';
@@ -23,6 +24,7 @@ function TodoList() {
               <Th>Title</Th>
               <Th>Description</Th>
               <Th isNumeric>Status</Th>
+              <Th isNumeric>Action</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -33,6 +35,9 @@ function TodoList() {
                   <Td>{todo.description}</Td>
                   <Td isNumeric>
                     <Tag colorScheme={STATUS_COLOR[todo.status]}>{todo.status}</Tag>
+                  </Td>
+                  <Td isNumeric> 
+                    <Button size="sm" colorScheme='red' type="button">Delete</Button>
                   </Td>
                 </Tr>
               )
