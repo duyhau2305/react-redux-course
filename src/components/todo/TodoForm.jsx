@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 
 // actions
 import * as todoActions from '../../redux/todo.actions';
@@ -28,8 +29,21 @@ function TodoForm() {
     formState: { errors },
   } = useForm()
   const toast = useToast()
+  const [submissionCount, setSubmissionCount] = useState(0)
   
   const onSubmit = (data) => {
+    if (submissionCount >= 3) {
+      
+      toast({
+        title: 'Submission Limit',
+        description: 'You cannot add more todos at the moment.',
+        status: 'warning',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+      return;
+    }
     const todoItem = {
       id: new Date().getTime().toString(),
       ...data,
@@ -46,7 +60,8 @@ function TodoForm() {
         duration: 1000,
         isClosable: true,
         position: 'top-right',
-      })
+      });
+      setSubmissionCount(submissionCount + 1); 
     }, 2000)
   }
 
