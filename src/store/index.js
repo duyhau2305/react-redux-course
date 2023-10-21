@@ -1,8 +1,9 @@
-import { combineReducers, createStore } from "redux";
+import { combineReducers, createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from '@redux-devtools/extension';
 
 import { appReducer } from "../redux/app.reducer";
 import { todoReducer } from "../redux/todo.reducer";
+import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
   app: appReducer,
@@ -11,10 +12,10 @@ const rootReducer = combineReducers({
 
 export const store = createStore(
   rootReducer,
-  composeWithDevTools()
+  composeWithDevTools(
+    applyMiddleware(thunk)
+  )
 );
-
-
 
 /*
 const initialState = {

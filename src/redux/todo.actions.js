@@ -8,9 +8,18 @@ export const addTodo = (payload = {}) => {
     payload
   }
 }
-export const delTodo = (payload= {})=>{
+export const delTodo = (payload)=>{
   return {
     type: DELETE_TODO,
     payload
+  }
+}
+
+
+export const asyncAddTodo = (payload) => (dispatch, getState) => {
+  console.log('asyncAddTodo', getState())
+  const todos = getState().todo.todos;
+  if(todos.length >= 10){
+    return
   }
 }
