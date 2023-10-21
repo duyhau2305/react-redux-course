@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux'
+import { useSelector , useDispatch} from 'react-redux'
 import {
   Table,
   Thead,
@@ -12,8 +12,11 @@ import {
 } from '@chakra-ui/react'
 
 import { STATUS_COLOR } from '../../configs/statusColor';
+import { delTodo } from '../../redux/todo.actions';
+
 
 function TodoList() {
+  const dispatch = useDispatch()
   const todos = useSelector(state => state.todo.todos)
   return (
     <div>
@@ -37,7 +40,7 @@ function TodoList() {
                     <Tag colorScheme={STATUS_COLOR[todo.status]}>{todo.status}</Tag>
                   </Td>
                   <Td isNumeric> 
-                    <Button size="sm" colorScheme='red' type="button">Delete</Button>
+                    <Button size="sm" colorScheme='red' type="button" onClick={() => dispatch(delTodo(todo.id))}>Delete</Button>
                   </Td>
                 </Tr>
               )
