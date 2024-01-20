@@ -13,15 +13,13 @@ import {
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { request } from '../../services/axiosInstance';
 
 // actions
 import * as todoActions from '../../redux/todo.actions';
-import * as appActions from '../../redux/app.actions'
-
 
 function TodoForm() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(state => state.app.isLoading);
   const todos = useSelector(state => state.todo.todos);
   const {
     register,
@@ -30,10 +28,9 @@ function TodoForm() {
   } = useForm()
   const toast = useToast()
   
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     // dispatch(todoActions.asyncAddTodo(data))
-    
-    if(todos.length >=3) {
+    if(todos.length >= 10) {
       toast({
         title: 'Submission Limit',
         description: 'You cannot add more todos at the moment.',
@@ -45,15 +42,23 @@ function TodoForm() {
       return;
     }
 
-    const todoItem = {
-      id: new Date().getTime().toString(),
-      ...data,
+    const bodyData = {
+      data: {
+        id: new Date().getTime().toString(),
+        severity: 'low',
+        author: "tony",
+        status: 'new',
+        ...data,
+      }
     }
-    dispatch(appActions.setLoading(true))
+    await request('/api/todo', {
+      method: 'POST',
+      showSpinner: true,
+      data: bodyData
+    });
 
     setTimeout(() =>{  
-      dispatch(appActions.setLoading(false));
-      dispatch(todoActions.addTodo(todoItem))
+      dispatch(todoActions.addTodo(bodyData.data))
       toast({
         title: 'Todo created.',
         description: "We've created todo for you.",
@@ -62,7 +67,7 @@ function TodoForm() {
         isClosable: true,
         position: 'top-right',
       });
-    }, 2000)
+    }, 1000)
   }
 
   return (
@@ -92,7 +97,7 @@ function TodoForm() {
 
       <br />
       <div style={{ textAlign: 'right' }}>
-        <Button isLoading={isLoading}  size="sm" colorScheme='blue' type="submit">Submit</Button>
+        <Button  size="sm" colorScheme='blue' type="submit">Submit</Button>
       </div>
       <br />
       

@@ -1,6 +1,8 @@
 // CONSTANT
 export const ADD_TODO = 'TODO/ADD_TODO';
 export const  DELETE_TODO = 'TODO/DELETE_TODO'
+export const SET_TODOS = 'SET_TODOS';
+
 // actions
 export const addTodo = (payload = {}) => {
   return {
@@ -15,7 +17,6 @@ export const delTodo = (payload)=>{
   }
 }
 
-
 export const asyncAddTodo = (payload) => (dispatch, getState) => {
   console.log('asyncAddTodo', getState())
   const todos = getState().todo.todos;
@@ -23,3 +24,8 @@ export const asyncAddTodo = (payload) => (dispatch, getState) => {
     return
   }
 }
+
+export const setTodos = (payload = []) => ({
+  type: SET_TODOS,
+  payload
+})

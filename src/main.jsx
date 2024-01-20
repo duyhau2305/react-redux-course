@@ -9,7 +9,12 @@ import App from './App.jsx'
 import './index.css'
 
 // store
-import { store } from './store'
+import { store } from './store';
+
+// init axios instance
+import { initRequest } from './services/axiosInstance';
+
+initRequest(store);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
