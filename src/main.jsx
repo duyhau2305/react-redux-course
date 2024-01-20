@@ -14,8 +14,7 @@ import { store } from './store'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <ChakraProvider>
-    <App />
-
+      <App />
     </ChakraProvider>
   </Provider>,
 )
